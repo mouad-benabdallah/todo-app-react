@@ -94,7 +94,12 @@ export const Tag = styled.div`
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
+  transition: 0.5s;
   background-color: ${theme.colors.white};
+  &:hover {
+    padding: 0.4rem 1.6rem;
+    box-shadow: 0px -2px 3px rgba(0, 0, 0, 0.3) inset;
+  }
 `
 
 export const TagIcon = styled.i`
@@ -122,21 +127,30 @@ export const TagLabel = styled.p`
   font-size: 0.8rem;
   font-weight: bold;
 `
+type InputContainerProps = {
+  display?: 'white' | 'black'
+}
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<InputContainerProps>`
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid ${theme.colors.greenOcean};
+  border-bottom: 1px solid
+    ${props =>
+      props.display === 'white' ? theme.colors.white : theme.colors.greenOcean};
 `
+type InputProps = {
+  display?: 'white' | 'black'
+}
 
-export const Input = styled.input`
+export const Input = styled.input<InputProps>`
   display: flex;
   flex-grow: 2;
   background: none;
   border: none;
   padding: 0.6rem;
-  color: ${theme.colors.softBlack};
+  color: ${props =>
+    props.display === 'white' ? theme.colors.white : theme.colors.softBlack};
   &:focus {
     outline: none;
     border: none;
@@ -154,17 +168,28 @@ export const TodoListContainer = styled.section`
   display: flex;
   flex-direction: column;
 `
+export type TodoProps = {
+  done?: boolean
+}
 
-export const Todo = styled.div`
+export const Todo = styled.div<TodoProps>`
   display: flex;
   padding: 0.6rem 1.2rem;
-  background-color: ${theme.colors.white};
+  background-color: ${props =>
+    props.done ? theme.colors.white : theme.colors.validGreen};
+  transition: all 0.5s;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3) inset;
   align-items: center;
+  &:hover {
+    padding: 1rem 1.2rem;
+    box-shadow: 0px -2px 3px rgba(0, 0, 0, 0.3) inset;
+  }
 `
 
-export const TodoLabel = styled.p`
+export const TodoLabel = styled.p<TodoProps>`
+  color: ${props => (props.done ? 'black' : 'white')};
   margin: 0;
+  transition: all 0.5s;
   flex-grow: 2;
   font-size: 0.8rem;
   font-weight: 600;
@@ -200,9 +225,13 @@ export const BottomNavShare = styled.div`
   padding: 0.6rem;
   display: flex;
   align-items: center;
+  transition: all 0.3s;
   justify-content: center;
   background-color: ${theme.colors.validGreen};
   cursor: pointer;
+  &:hover {
+    padding: 0.6rem 1.5rem;
+  }
 `
 
 export const BottomNavDelete = styled.div`
@@ -212,7 +241,11 @@ export const BottomNavDelete = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${theme.colors.red};
+
   cursor: pointer;
+  &:hover {
+    padding: 0.6rem 1.5rem;
+  }
 `
 
 export const BottomNavMenu = styled.div`
@@ -221,8 +254,21 @@ export const BottomNavMenu = styled.div`
   padding: 1rem;
 `
 
-export const BottomNavItem = styled.i`
+export const BottomNavBars = styled.i`
   font-size: 1.2rem;
+  transition: all 0.3s;
+
+  &:hover {
+    font-size: 1.5rem;
+  }
+`
+export const BottomNavUser = styled.i`
+  font-size: 1.2rem;
+  transition: all 0.3s;
+
+  &:hover {
+    font-size: 1.5rem;
+  }
 `
 
 // ===========
@@ -231,5 +277,41 @@ export const BottomNavItem = styled.i`
 
 export const MyParagraph = styled.p`
   text-align: center;
-  color: #725498;
+  color: #111011;
+`
+type GreenRightFrameProps = {
+  open?: boolean
+}
+
+export const GreenRightFrame = styled.div<GreenRightFrameProps>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background-color: ${theme.colors.greenOcean};
+  color: ${theme.colors.white};
+  transition: all 0.5s;
+  transform: ${props => (props.open ? `translateX(0)` : `translateX(105vw)`)};
+  z-index: 10;
+  flex-direction: column;
+  align-items: stretch;
+`
+
+export const GreenFrameHeader = styled.div`
+  padding: 0 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+export const GreenFrameClose = styled.i`
+  font-size: 1.4rem;
+`
+
+export const GreenFrameTitle = styled.p`
+  text-align: right;
+  font-size: 1.7rem;
+  font-family: 'Lobster', sans-serif;
 `
